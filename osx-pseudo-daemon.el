@@ -22,8 +22,6 @@
 ;; hiding Emacs, use CMD+Q (or Alt+Q if you swapped Alt & Command
 ;; keys).
 
-;; You can safely 
-
 ;;; License:
 
 ;; This program is free software; you can redistribute it and/or modify
@@ -60,9 +58,14 @@ the Emacs app is hidden, thus approximating the behvaior of
 daemon mode while keeping the Emacs dock icon functional. To
 actually quit instead of hiding Emacs, use CMD+Q (or Alt+Q if you
 swapped Alt & Command keys).
+
+This mode has no effect unless Emacs is running on OSX with the
+Cocoa GUI, so it is safe to enable it unconditionally on all
+platforms.
 "
   :group 'osx-pseudo-daemon
   :global t
+  ;; Enable by default on OSX
   :init-value (featurep 'ns))
 
 (defun osxpd-frame-is-last-ns-frame (frame)

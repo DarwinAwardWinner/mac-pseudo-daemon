@@ -1,12 +1,10 @@
 ;;; osx-pseudo-daemon.el --- Daemon mode that plays nice with OSX.
 
 ;; Author: Ryan C. Thompson
-;; URL: https://github.com/DarwinAwardWinner/ido-ubiquitous
-;; Version: 2.2
-;; Created: 2011-09-01
-;; Keywords: convenience
-;; EmacsWiki: InteractivelyDoThings
-;; Package-Requires: ((emacs "24.1"))
+;; URL: https://github.com/DarwinAwardWinner/osx-pseudo-daemon
+;; Version: 1.0
+;; Created: 2013-09-20
+;; Keywords: convenience osx
 
 ;; This file is NOT part of GNU Emacs.
 

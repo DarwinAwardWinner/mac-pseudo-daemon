@@ -131,3 +131,5 @@ This is called immediately prior to FRAME being closed."
                (lambda (frm) (eq (frame-terminal frm)
                             (frame-terminal frame)))))
       ad-do-it)))
+
+(provide 'osx-pseudo-daemon) ;;; osx-pseudo-daemon.el ends here

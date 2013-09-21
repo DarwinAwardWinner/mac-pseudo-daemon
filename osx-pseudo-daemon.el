@@ -132,4 +132,6 @@ This is called immediately prior to FRAME being closed."
                             (frame-terminal frame)))))
       ad-do-it)))
 
-(provide 'osx-pseudo-daemon) ;;; osx-pseudo-daemon.el ends here
+(provide 'osx-pseudo-daemon)
+
+;;; osx-pseudo-daemon.el ends here

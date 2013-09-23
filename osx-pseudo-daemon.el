@@ -39,6 +39,8 @@
 
 ;;; Code:
 
+;; Try to require ns to ensure that (featurep 'ns) is t if ns is
+;; available.
 (require 'ns nil 'noerror)
 
 (defgroup osx-pseudo-daemon nil

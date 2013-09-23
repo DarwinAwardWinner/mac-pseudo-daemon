@@ -1,4 +1,4 @@
-# OS X "Pseudo-Daemon"
+# Emacs "Pseudo-Daemon" for Mac OS X
 
 If you've ever tried to use Emacs in daemon mode on Mac OS X, you
 might have noticed that after you close the last graphical Emacs

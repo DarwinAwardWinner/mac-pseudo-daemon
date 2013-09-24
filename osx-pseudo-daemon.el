@@ -85,7 +85,6 @@ platforms.
 This is called immediately prior to FRAME being closed."
   (when (featurep 'ns)
     (let ((frame (or frame (selected-frame))))
-      (message "FRAME: %s" frame)
       (when (osxpd-frame-is-last-ns-frame frame)
         (progn
           ;; If FRAME is fullscreen, un-fullscreen it.

@@ -43,9 +43,11 @@
 ;; available.
 (require 'ns nil 'noerror)
 
+;;;###autoload
 (defgroup osx-pseudo-daemon nil
   "Emulate daemon mode in OSX by hiding Emacs when you kill the last GUI frame.")
 
+;;;###autoload
 (define-minor-mode osx-pseudo-daemon-mode
   "Emulate daemon mode in OSX by hiding Emacs when you kill the last GUI frame.
 

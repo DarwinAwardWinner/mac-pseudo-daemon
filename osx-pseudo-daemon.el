@@ -109,13 +109,16 @@ This is called immediately prior to FRAME being closed."
 
 ;; TODO: Is `delete-frame-hook' an appropriate place for this?
 (defadvice delete-frame (before osxpd-keep-at-least-one-ns-frame activate)
+  "When the last NS frame is deleted, create a new hidden one first."
   (when osx-pseudo-daemon-mode
     (osxpd-keep-at-least-one-ns-frame frame)))
 
 ;; This is the function that gets called when you click the X button
 ;; on the window's title bar.
 (defadvice handle-delete-frame (around osxpd-never-quit-ns-emacs activate)
-  "Never invoke `save-buffers-kill-emacs' when deleting NS frame."
+  "Never invoke `save-buffers-kill-emacs' when deleting NS frame.
+
+Instead, just delete the frame as normal."
   (let ((frame (posn-window (event-start event))))
     (if (and osx-pseudo-daemon-mode
              (eq 'ns (framep frame)))
@@ -123,6 +126,7 @@ This is called immediately prior to FRAME being closed."
       ad-do-it)))
 
 (defadvice save-buffers-kill-terminal (around osx-pseudo-daemon activate)
+  "When killing an NS terminal, instead just delete all NS frames."
   (let ((frame (selected-frame)))
     (if (and osx-pseudo-daemon-mode
              (eq 'ns (framep frame)))

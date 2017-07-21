@@ -1,16 +1,16 @@
-# Emacs "Pseudo-Daemon" for Mac OS X
+# Emacs "pseudo-daemon" for Mac OS
 
-If you've ever tried to use Emacs in daemon mode on Mac OS X, you
-might have noticed that after you close the last graphical Emacs
-client frame, the Emacs dock icon and menu bar become non-functional
-until you create a new graphical frame. This package implements nearly
+If you've ever tried to use Emacs in daemon mode on Mac OS, you might
+have noticed that after you close the last graphical Emacs client
+frame, the Emacs dock icon and menu bar become non-functional until
+you create a new graphical frame. This package implements nearly
 identical behavior to daemon mode using a simple hack: whenever the
 last graphical frame is closed, a new hidden frame is created. The
 next time Emacs is activated, the hidden frame is revealed. The result
 is essentially the same as using daemon mode, but without the
 drawbacks.
 
-To turn the mode on or off, customize `osx-pseudo-daemon-mode`. If
+To turn the mode on or off, customize `mac-pseudo-daemon-mode`. If
 your Emacs config is shared across several different systems, feel
 free to enable the mode unconditionally. It has no effect on other
 systems.

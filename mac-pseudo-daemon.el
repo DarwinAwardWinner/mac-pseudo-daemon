@@ -120,6 +120,16 @@ systems, it is safe to enable this mode unconditionally."
                             (frame-terminal frame)))))
       1)))
 
+(defun macpd-make-new-default-frame (&optional parameters)
+  "Like `make-frame' but selects the `*scratch*` buffer in that frame.
+
+Also does not change the currently selected frame."
+  (with-selected-frame (make-frame)
+    (delete-other-windows)
+    (switch-to-buffer "*scratch*")
+    ;; Return the new frame
+    (selected-frame)))
+
 (defun macpd-keep-at-least-one-mac-frame (frame)
   "If FRAME is the last GUI frame on Mac, open a new hidden frame.
 
@@ -133,7 +143,7 @@ This is called immediately prior to FRAME being closed."
         ;; Wait for fullscreen animation to complete
         (sit-for 1.5))
       ;; Create a new frame on same terminal as FRAME
-      (make-frame `(terminal ,(frame-terminal frame)))
+      (macpd-make-new-default-frame `((terminal . `(frame-terminal frame))))
       ;; Making a frame might unhide emacs, so hide again
       (sit-for 0.1)
       (macpd-hide-emacs))))

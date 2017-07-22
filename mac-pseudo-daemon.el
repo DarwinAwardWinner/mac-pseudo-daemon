@@ -58,12 +58,15 @@
 
 ;;;###autoload
 (defgroup mac-pseudo-daemon nil
-  "Emulate daemon mode in Mac OS by hiding Emacs when you kill the last GUI frame.")
+  "Emulate daemon mode in Mac OS by hiding Emacs when you kill the last GUI frame."
+  :group 'convenience)
 
 (defsubst macpd-mac-gui-feature-is-provided ()
+  "Return non-nil if any Mac GUI feature was `provide'-ed."
   (cl-some #'featurep macpd-mac-gui-features))
 
 (defsubst macpd-frame-is-mac-frame (frame)
+  "Return non-=nil if FRAME is a Mac GUI frame."
   (memq (framep frame) macpd-mac-frame-types))
 
 (defun macpd-hide-emacs ()
@@ -108,7 +111,7 @@ systems, it is safe to enable this mode unconditionally."
   :init-value (macpd-mac-gui-feature-is-provided))
 
 (defun macpd-frame-is-last-mac-frame (frame)
-  "Returns t if FRAME is the only NS frame."
+  "Return t if FRAME is the only NS frame."
   (and
    ;; Mac frames supported
    (macpd-mac-gui-feature-is-provided)
@@ -121,9 +124,11 @@ systems, it is safe to enable this mode unconditionally."
       1)))
 
 (defun macpd-make-new-default-frame (&optional parameters)
-  "Like `make-frame' but selects the `*scratch*` buffer in that frame.
+  "Like `make-frame', but select the `*scratch*` buffer in that frame.
 
-Also does not change the currently selected frame."
+Also does not change the currently selected frame.
+
+Arguments PARAMETERS are the same as in `make-frame'."
   (with-selected-frame (make-frame)
     (delete-other-windows)
     (switch-to-buffer "*scratch*")

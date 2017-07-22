@@ -109,7 +109,7 @@ systems, it is safe to enable this mode unconditionally."
   :group 'mac-pseudo-daemon
   :global t
   ;; Enable by default on Mac OS
-  :init-value (macpd-mac-gui-feature-is-provided))
+  :init-value nil)
 
 (defun macpd-frame-is-last-mac-frame (frame)
   "Return t if FRAME is the only NS frame."

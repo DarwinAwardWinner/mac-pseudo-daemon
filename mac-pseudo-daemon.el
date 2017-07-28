@@ -125,14 +125,20 @@ systems, it is safe to enable this mode unconditionally."
       1)))
 
 (defun macpd-make-new-default-frame (&optional parameters)
-  "Like `make-frame', but select the `*scratch*` buffer in that frame.
+  "Like `make-frame', but select the initial buffer in that frame.
 
 Also does not change the currently selected frame.
 
 Arguments PARAMETERS are the same as in `make-frame'."
   (with-selected-frame (make-frame)
     (delete-other-windows)
-    (switch-to-buffer "*scratch*")
+    (switch-to-buffer
+     (cond ((stringp initial-buffer-choice)
+            (find-file-noselect initial-buffer-choice))
+           ((functionp initial-buffer-choice)
+            (funcall initial-buffer-choice))
+           (t ;; Ignore unusual values; real startup will alert the user.
+            (get-buffer-create "*scratch*"))))
     ;; Return the new frame
     (selected-frame)))
 

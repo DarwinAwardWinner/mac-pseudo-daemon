@@ -130,7 +130,7 @@ systems, it is safe to enable this mode unconditionally."
 Also does not change the currently selected frame.
 
 Arguments PARAMETERS are the same as in `make-frame'."
-  (with-selected-frame (make-frame)
+  (with-selected-frame (make-frame parameters)
     (delete-other-windows)
     (switch-to-buffer
      (cond ((stringp initial-buffer-choice)

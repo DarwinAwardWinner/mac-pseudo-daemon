@@ -130,7 +130,7 @@ systems, it is safe to enable this mode unconditionally."
 Also does not change the currently selected frame.
 
 Arguments PARAMETERS are the same as in `make-frame'."
-  (with-selected-frame (make-frame)
+  (with-selected-frame (make-frame parameters)
     (delete-other-windows)
     (switch-to-buffer
      (cond ((stringp initial-buffer-choice)
@@ -155,7 +155,7 @@ This is called immediately prior to FRAME being closed."
         ;; Wait for fullscreen animation to complete
         (sit-for 1.5))
       ;; Create a new frame on same terminal as FRAME
-      (macpd-make-new-default-frame `((terminal . `(frame-terminal frame))))
+      (macpd-make-new-default-frame `((terminal . ,(frame-terminal frame))))
       ;; Making a frame might unhide emacs, so hide again
       (sit-for 0.1)
       (macpd-hide-emacs))))

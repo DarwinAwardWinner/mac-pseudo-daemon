@@ -42,4 +42,4 @@ before_script:
 
 script:
   - make compile
-  # - make test
+  - make test

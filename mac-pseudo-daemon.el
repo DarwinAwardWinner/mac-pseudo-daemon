@@ -43,49 +43,9 @@
 (require 'cl-lib)
 
 ;;;###autoload
-(defvar macpd-mac-frame-types '(ns mac w32)
-  "Set of frame types considered to be GUI frames.")
-
-;;;###autoload
-(defvar macpd-mac-gui-features '(ns mac w32)
-  "Set of features indicating Emacs is running a GUI.")
-
-;; Try to require mac gui features to ensure that `featurep' can find
-;; them.
-;;;###autoload
-(cl-loop
- for feature in macpd-mac-gui-features
- do (require feature nil 'noerror))
-
-;;;###autoload
 (defgroup mac-pseudo-daemon nil
   "Emulate daemon mode in Mac OS by hiding Emacs when you kill the last GUI frame."
   :group 'convenience)
-
-(defsubst macpd-mac-gui-feature-is-provided ()
-  "Return non-nil if any Mac GUI feature was `provide'-ed."
-  (cl-some #'featurep macpd-mac-gui-features))
-
-(defsubst macpd-frame-is-mac-frame (frame)
-  "Return non-=nil if FRAME is a Mac GUI frame."
-  (memq (framep frame) macpd-mac-frame-types))
-
-(defun macpd-hide-emacs ()
-  "Hide all Emacs windows if running.
-
-This works for both `ns' and `mac' frame types."
-  (cl-case (framep (selected-frame))
-    (ns
-     (ns-hide-emacs t))
-    (mac
-     (call-process
-      "osascript" nil nil nil
-      "-e" "tell application \"Finder\""
-      "-e" "set visible of process \"Emacs\" to false"
-      "-e" "end tell"))
-    (w32
-     (dolist (frame (visible-frame-list))
-       (iconify-frame frame)))))
 
 ;;;###autoload
 (define-minor-mode mac-pseudo-daemon-mode
@@ -114,6 +74,33 @@ systems, it is safe to enable this mode unconditionally."
   ;; Enable by default on Mac OS
   :init-value nil)
 
+(defcustom macpd-mac-frame-types '(ns mac)
+  "Set of frame types considered to be GUI frames.
+
+See `framep' for the set of valid values.
+
+You can enable pseudo-daemon mode for Windows (w32) and X
+server (x) frame types, but this configuration is relatively
+untested. "
+  :type '(list
+          (set :inline t
+               :tag "Known GUI frame types"
+               (const ns)
+               (const mac)
+               (const w32)
+               (const x))
+          (repeat :inline t
+                  :tag "Other frame types"
+                  (symbol :tag "Frame type"))))
+
+(defsubst macpd-mac-gui-feature-is-provided ()
+  "Return non-nil if any Mac GUI feature was `provide'-ed."
+  (cl-some #'featurep macpd-mac-gui-features))
+
+(defsubst macpd-frame-is-mac-frame (frame)
+  "Return non-=nil if FRAME is a Mac GUI frame."
+  (memq (framep frame) macpd-mac-frame-types))
+
 (defsubst macpd-terminal-frame-list (&optional term-or-frame)
   "Return a list of all frames on a terminal.
 
@@ -139,11 +126,38 @@ currently selected frame."
     (filtered-frame-list
      (lambda (frm) (eq (frame-terminal frm) term)))))
 
+(defun macpd-hide-terminal ()
+  "Hide all Emacs frames on the current terminal.
+
+This works for both `ns' and `mac' frame types. for other GUI
+terminals, it just calls `iconify-frame' on all the terminal's
+frames.
+
+Does not work on non-GUI terminals (i.e. `emacs -nw')."
+  (let ((ttype (framep (selected-frame))))
+    (cond
+     ;; Standard Mac GUI frame
+     ((eq ttype 'ns)
+      (ns-hide-emacs t))
+     ;; "Emacs Mac Port" frame
+     ((eq ttype 'mac)
+      (call-process
+       "osascript" nil nil nil
+       "-e" "tell application \"Finder\""
+       "-e" "set visible of process \"Emacs\" to false"
+       "-e" "end tell"))
+     ;; Non-Mac GUI frame (Windows or X)
+     ((memq ttype '(w32 x))
+      (dolist (frame (macpd-terminal-frame-list (selected-frame)))
+        (iconify-frame frame)))
+     ;; Any other kind of frame (generally non-GUI terminal frames).
+     ;; Note that "hide" is not the same as "suspend".
+     (t
+      (display-warning 'mac-pseudo-daemon "Don't know how to hide this terminal")))))
+
 (defun macpd-frame-is-last-mac-frame (frame)
   "Return t if FRAME is the only NS frame."
   (and
-   ;; Mac frames supported
-   (macpd-mac-gui-feature-is-provided)
    ;; Frame is mac frame
    (macpd-frame-is-mac-frame frame)
    ;; No other frames on same terminal
@@ -183,7 +197,7 @@ This is called immediately prior to FRAME being closed."
       (macpd-make-new-default-frame `((terminal . ,(frame-terminal frame))))
       ;; Making a frame might unhide emacs, so hide again
       (sit-for 0.1)
-      (macpd-hide-emacs))))
+      (macpd-hide-terminal))))
 
 ;; TODO: Is `delete-frame-hook' an appropriate place for this?
 (defadvice delete-frame (before macpd-keep-at-least-one-mac-frame activate)

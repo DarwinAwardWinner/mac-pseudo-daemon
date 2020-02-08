@@ -43,12 +43,12 @@
 (require 'cl-lib)
 
 ;;;###autoload
-(defvar macpd-mac-frame-types '(ns mac)
-  "Set of frame types considered to be Mac GUI frames.")
+(defvar macpd-mac-frame-types '(ns mac w32)
+  "Set of frame types considered to be GUI frames.")
 
 ;;;###autoload
-(defvar macpd-mac-gui-features '(ns mac)
-  "Set of features indicating Emacs is running a Mac GUI.")
+(defvar macpd-mac-gui-features '(ns mac w32)
+  "Set of features indicating Emacs is running a GUI.")
 
 ;; Try to require mac gui features to ensure that `featurep' can find
 ;; them.
@@ -82,7 +82,10 @@ This works for both `ns' and `mac' frame types."
       "osascript" nil nil nil
       "-e" "tell application \"Finder\""
       "-e" "set visible of process \"Emacs\" to false"
-      "-e" "end tell"))))
+      "-e" "end tell"))
+    (w32
+     (dolist (frame (visible-frame-list))
+       (iconify-frame frame)))))
 
 ;;;###autoload
 (define-minor-mode mac-pseudo-daemon-mode

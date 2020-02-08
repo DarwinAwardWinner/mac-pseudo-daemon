@@ -75,7 +75,7 @@ systems, it is safe to enable this mode unconditionally."
   :init-value nil)
 
 (defcustom macpd-mac-frame-types '(ns mac)
-  "Set of frame types considered to be GUI frames.
+  "Set of frame types considered to be Mac GUI frames.
 
 See `framep' for the set of valid values.
 

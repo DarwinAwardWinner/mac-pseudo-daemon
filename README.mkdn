@@ -14,3 +14,10 @@ To turn the mode on or off, customize `mac-pseudo-daemon-mode`. If
 your Emacs config is shared across several different systems, feel
 free to enable the mode unconditionally. It has no effect on other
 systems.
+
+## Using on non-Mac systems
+
+In theory, this package can work on other systems besides Macs,
+causing Emacs to retain one iconified frame when you attempt to kill
+the last existing frame. However this is still an experimental
+feature. Customize `macpd-mac-frame-types` to try this feature.

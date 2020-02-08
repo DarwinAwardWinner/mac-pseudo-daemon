@@ -114,6 +114,31 @@ systems, it is safe to enable this mode unconditionally."
   ;; Enable by default on Mac OS
   :init-value nil)
 
+(defsubst macpd-terminal-frame-list (&optional term-or-frame)
+  "Return a list of all frames on a terminal.
+
+The argument can either be a terminal or a frame. If passed a
+terminal, it will return the list of all frames on that terminal.
+If passed a frame, it will return a list of all frames on the
+same terminal as that frame (including the frame itself). The
+terminal/frame must be live.
+
+If not passed any argument, it will use the terminal of the
+currently selected frame."
+  (when (null term-or-frame)
+    (setq term-or-frame (frame-terminal (selected-frame))))
+  (let ((term
+         (cond
+          ((frame-live-p term-or-frame)
+           (frame-terminal term-or-frame))
+          ((terminal-live-p term-or-frame)
+           term-or-frame)
+          ((null ))
+          (t
+           (signal 'wrong-type-argument 'terminal-live-p term-or-frame)))))
+    (filtered-frame-list
+     (lambda (frm) (eq (frame-terminal frm) term)))))
+
 (defun macpd-frame-is-last-mac-frame (frame)
   "Return t if FRAME is the only NS frame."
   (and
@@ -122,10 +147,7 @@ systems, it is safe to enable this mode unconditionally."
    ;; Frame is mac frame
    (macpd-frame-is-mac-frame frame)
    ;; No other frames on same terminal
-   (<= (length (filtered-frame-list
-               (lambda (frm) (eq (frame-terminal frm)
-                            (frame-terminal frame)))))
-      1)))
+   (<= (length (macpd-terminal-frame-list frame)) 1)))
 
 (defun macpd-make-new-default-frame (&optional parameters)
   "Like `make-frame', but select the initial buffer in that frame.
@@ -192,9 +214,7 @@ unless `mac-pseudo-daemon-mode' is active.)"
         ;; will automatically be spawned by the advice to
         ;; `delete-frame' when the last existing frame is deleted.
         (let ((term (frame-terminal (selected-frame))))
-          (mapc 'delete-frame
-                (filtered-frame-list
-                 (lambda (frm) (eq (frame-terminal frm) term)))))
+          (mapc 'delete-frame (macpd-terminal-frame-list term)))
       ad-do-it)))
 
 (provide 'mac-pseudo-daemon)

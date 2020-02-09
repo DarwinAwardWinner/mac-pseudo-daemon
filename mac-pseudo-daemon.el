@@ -120,9 +120,8 @@ currently selected frame."
            (frame-terminal term-or-frame))
           ((terminal-live-p term-or-frame)
            term-or-frame)
-          ((null ))
           (t
-           (signal 'wrong-type-argument 'terminal-live-p term-or-frame)))))
+           (signal 'wrong-type-argument `(terminal-live-p ,term-or-frame))))))
     (filtered-frame-list
      (lambda (frm) (eq (frame-terminal frm) term)))))
 

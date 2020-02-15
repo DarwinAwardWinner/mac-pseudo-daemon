@@ -24,18 +24,11 @@ before_script:
     travis-wait-enhanced --version
   # Install nix-emacs-ci
   - bash <(curl https://raw.githubusercontent.com/purcell/nix-emacs-ci/master/travis-install)
-  # Install cask
-  - curl -fsSkL https://raw.github.com/cask/cask/master/go | python
-  - export PATH="$HOME/.cask/bin:$PATH"
-  # Fix cask (See https://github.com/cask/cask/issues/399#issuecomment-331640427)
-  - perl -ibak -lape 's{#!/usr/bin/env python}{#!/usr/bin/python}' "$(which cask)"
-  # Check that cask is finding the right emacs
-  - cask emacs --version
-  # Use version-specific Cask file if it exists
-  - if [ -e "Cask-$EMACS_CI" ]; then cp "Cask-$EMACS_CI" "Cask"; fi
+  # Install Eldev
+  - curl -fsSL https://raw.github.com/doublep/eldev/master/webinstall/travis-eldev > x.sh && source ./x.sh
   # Install elisp dependencies
-  - cask install
+  - eldev prepare test
 
 script:
-  - travis-wait-enhanced --timeout=3m -- make compile
-  - travis-wait-enhanced --timeout=3m -- make test
+  - travis-wait-enhanced --timeout=3m -- eldev -s -dtT test
+  - travis-wait-enhanced --timeout=3m -- eldev -p -dtT test

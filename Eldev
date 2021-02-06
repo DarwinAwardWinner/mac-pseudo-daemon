@@ -1,13 +1,13 @@
 ; -*- mode: emacs-lisp; lexical-binding: t; no-byte-compile: t -*-
 
+(eldev-use-plugin 'undercover)
+
 ;; (eldev-use-package-archive 'gnu)
-(eldev-use-package-archive 'melpa-stable)
+(eldev-use-package-archive 'melpa)
 
 (setq eldev-project-main-file "mac-pseudo-daemon.el")
 
 (setq eldev-test-framework 'buttercup)
-
-(eldev-add-extra-dependencies 'test 'undercover)
 
 ;; Tell checkdoc not to demand two spaces after a period.
 (setq sentence-end-double-space nil)

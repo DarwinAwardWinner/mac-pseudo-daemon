@@ -188,8 +188,7 @@ necessary to iconify/hide it, and then return it."
         parameters))
     ;; Finally hide the Emacs app, after a short delay
     (sit-for 0.1)
-    (ns-hide-emacs t)
-    new-frame))
+    (ns-hide-emacs t)))
 
 (cl-defmethod pseudo-daemon--internal-make-hidden-frame
   (terminal parameters current-frame &context (window-system mac))

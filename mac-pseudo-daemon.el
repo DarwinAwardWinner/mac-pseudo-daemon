@@ -146,7 +146,7 @@ Does not work on non-GUI terminals (i.e. `emacs -nw')."
        "-e" "set visible of process \"Emacs\" to false"
        "-e" "end tell"))
      ;; Non-Mac GUI frame (Windows or X)
-     ((memq ttype '(w32 x))
+     ((memq ttype '(w32 x pgtk))
       (dolist (frame (macpd-terminal-frame-list (selected-frame)))
         (iconify-frame frame)))
      ;; Any other kind of frame (generally non-GUI terminal frames).

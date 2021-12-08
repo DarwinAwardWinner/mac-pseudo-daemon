@@ -241,10 +241,12 @@ necessary to iconify/hide it, and then return it."
 ;; \"pseudo-daemon-make-frame-transient\"."
 ;;   (set-frame-parameter frame 'pseudo-daemon-transient nil))
 
+;;;###autoload
 (defgroup pseudo-daemon nil
   "[PLACEHOLDER]"
   :group 'convenience)
 
+;;;###autoload
 (define-minor-mode pseudo-daemon-mode
   "[PLACEHOLDER]"
   :group 'pseudo-daemon

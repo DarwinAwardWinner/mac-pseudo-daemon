@@ -2,7 +2,7 @@
 
 ;; Author: Ryan C. Thompson
 ;; URL: https://github.com/DarwinAwardWinner/mac-pseudo-daemon
-;; Version: 2.2
+;; Version: 3.0
 ;; Created: 2013-09-20
 ;; Keywords: convenience osx
 
@@ -10,8 +10,7 @@
 
 ;;; Commentary:
 
-;; This package has been renamed to mac-pseudo-daemon.el, to be
-;; consistent with the renaming of OSX to Mac OS. Please install that
+;; This package has been renamed to pseudo-daemon.el. Please use that
 ;; package instead.
 
 ;;; License:
@@ -33,10 +32,10 @@
 
 ;;; Code:
 
-(require 'mac-pseudo-daemon)
+(require 'pseudo-daemon)
 
-(define-obsolete-function-alias 'osx-pseudo-daemon-mode 'mac-pseudo-daemon-mode "2.0")
-(define-obsolete-variable-alias 'osx-pseudo-daemon-mode 'mac-pseudo-daemon-mode "2.0")
+(define-obsolete-function-alias 'osx-pseudo-daemon-mode 'pseudo-daemon-mode "2.0")
+(define-obsolete-variable-alias 'osx-pseudo-daemon-mode 'pseudo-daemon-mode "2.0")
 
 (provide 'osx-pseudo-daemon)
 

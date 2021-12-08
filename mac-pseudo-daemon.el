@@ -1,7 +1,7 @@
 ;;; mac-pseudo-daemon.el --- Daemon mode that plays nice with Mac OS.
 
 ;; Author: Ryan C. Thompson
-;; URL: https://github.com/DarwinAwardWinner/osx-pseudo-daemon
+;; URL: https://github.com/DarwinAwardWinner/mac-pseudo-daemon
 ;; Version: 2.2
 ;; Package-Requires: ((cl-lib "0.1"))
 ;; Created: 2013-09-20

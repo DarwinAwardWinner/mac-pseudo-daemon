@@ -134,8 +134,14 @@ containing the scratch buffer or the startup buffer. See
             (find-file-noselect initial-buffer-choice))
            ((functionp initial-buffer-choice)
             (funcall initial-buffer-choice))
-           (t ;; Ignore unusual values; real startup will alert the user.
-            (startup--get-buffer-create-scratch))))))
+           ;; Note: we assume t otherwise rather than check; real
+           ;; startup will alert the user to invalid values.
+           (t
+            (condition-case err
+                ;; Newer Emacsen
+                (switch-to-buffer (get-scratch-buffer-create))
+              ;; Older Emacsen
+              (void-function (startup--get-buffer-create-scratch))))))))
 
 (defun pseudo-daemon-make-hidden-frame (&optional terminal parameters)
   "Make a new iconified frame on TERMINAL.

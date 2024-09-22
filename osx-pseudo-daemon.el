@@ -2,8 +2,8 @@
 
 ;; Author: Ryan C. Thompson
 ;; URL: https://github.com/DarwinAwardWinner/mac-pseudo-daemon
-;; Version: 2.2
-;; Package-Requires: ((mac-pseudo-daemon "2.2"))
+;; Version: 2.3
+;; Package-Requires: ((mac-pseudo-daemon "2.3"))
 ;; Created: 2013-09-20
 ;; Keywords: convenience osx
 

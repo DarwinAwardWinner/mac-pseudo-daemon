@@ -5,7 +5,7 @@
 ;; (eldev-use-package-archive 'gnu)
 (eldev-use-package-archive 'melpa)
 
-(setq eldev-project-main-file "mac-pseudo-daemon.el")
+(setq eldev-project-main-file "pseudo-daemon.el")
 
 (setq eldev-test-framework 'buttercup)
 

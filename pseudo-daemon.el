@@ -24,7 +24,7 @@
 ;; command line.
 ;; - The long-standing bug with closing displays on GTK:
 ;; https://gitlab.gnome.org/GNOME/gtk/-/issues/221
-;; - In the newew pure GTK branch, an Emacs daemon sometimes randomly
+;; - In the new pure GTK branch, an Emacs daemon sometimes randomly
 ;; loses the ability to access the system's clipboard.
 ;;
 ;; To work around this, if you're always going to be running a GUI
@@ -40,7 +40,9 @@
 ;; daemon mode, hence the name "pseudo-daemon". The hidden frame is
 ;; only created on demand when the last "real" GUI frame is deleted.
 ;; The next time you activate Emacs, instead of creating a new frame,
-;; this already-existing hidden frame is simply shown.
+;; this already-existing hidden frame is simply shown. Note that since
+;; the last frame is never closed, you don't actually need to use this
+;; in combination with the real daemon mode.
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; 
@@ -215,7 +217,7 @@ necessary to iconify/hide it, and then return it."
         parameters))
     ;; Finally hide the Emacs app, after a short delay
     (sit-for 0.1)
-    ;; This is the only different from the NS method. TODO: Find a
+    ;; This is the only difference from the NS method. TODO: Find a
     ;; better way to do this.
     (call-process
      "osascript" nil nil nil

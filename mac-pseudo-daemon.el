@@ -3,7 +3,7 @@
 ;; Author: Ryan C. Thompson
 ;; URL: https://github.com/DarwinAwardWinner/mac-pseudo-daemon
 ;; Version: 3.0
-;; Package-Requires: ()
+;; Package-Requires: ((pseudo-daemon "3.0"))
 ;; Created: 2013-09-20
 ;; Keywords: convenience osx mac
 

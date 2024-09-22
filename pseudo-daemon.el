@@ -139,7 +139,7 @@ containing the scratch buffer or the startup buffer. See
            ;; Note: we assume t otherwise rather than check; real
            ;; startup will alert the user to invalid values.
            (t
-            (condition-case err
+            (condition-case nil
                 ;; Newer Emacsen
                 (switch-to-buffer (get-scratch-buffer-create))
               ;; Older Emacsen

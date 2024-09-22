@@ -6,7 +6,7 @@
 ;; Author: Ryan C. Thompson
 ;; Created: Tue Dec  7 10:57:21 2021 (-0500)
 ;; Version: 3.0
-;; Package-Requires: ((cl-lib "0.1"))
+;; Package-Requires: ((emacs "25.1") (cl-lib "0.1"))
 ;; URL: https://github.com/DarwinAwardWinner/mac-pseudo-daemon
 ;; Keywords: convenience
 

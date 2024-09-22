@@ -17,7 +17,7 @@ jobs:
         # For available versions: https://github.com/purcell/nix-emacs-ci/blob/master/flake.nix
         emacs_version:
           - 29.4
-          - 24.4
+          - 25.1
           - snapshot
     # env:
     #   # We only generate a coverage report for one Emacs version

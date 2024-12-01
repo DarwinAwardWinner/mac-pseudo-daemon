@@ -373,8 +373,13 @@ as normal, so that the pseudo-daemon can do its work."
       (apply orig-fun args))))
 
 (defsubst pseudo-daemon-delete-all-frames-on-terminal (terminal)
-  "Call `delete-frame' on all frames on TERMINAL"
-  (mapc #'delete-frame (pseudo-daemon--terminal-frame-list terminal)))
+  "Call `delete-frame' on all frames on TERMINAL."
+  ;; We use the FORCE argument to `delete-frame' here, because
+  ;; otherwise when it gets to the "last" frame, it thinks that the
+  ;; frame is still last even after running
+  ;; `pseudo-daemon-make-hidden-frame' first.
+  (mapc (lambda (frm) (delete-frame frm t))
+        (pseudo-daemon--terminal-frame-list terminal)))
 
 (defun save-buffers-kill-terminal@pseudo-daemon (orig-fun &rest args)
   "Advice implementing `pseudo-daemon-mode'.

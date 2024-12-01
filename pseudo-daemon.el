@@ -141,7 +141,7 @@ containing the scratch buffer or the startup buffer. See
            (t
             (condition-case nil
                 ;; Newer Emacsen
-                (switch-to-buffer (get-scratch-buffer-create))
+                (get-scratch-buffer-create)
               ;; Older Emacsen
               (void-function (startup--get-buffer-create-scratch))))))))
 
